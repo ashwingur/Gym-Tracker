@@ -7,7 +7,33 @@
     tools:context=".ExerciseLogger">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/reps_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/reps_tv"
+        app:layout_constraintStart_toEndOf="@id/reps_tv"/>
+
+    <TextView
+        android:id="@+id/reps_tv"
+        android:layout_width="83dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="32dp"
+        android:gravity="bottom|center_horizontal"
+        android:text="Reps"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/reps_et"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sets_tv" />
+
+    <EditText
+        android:id="@+id/exercise_et"
         android:layout_width="308dp"
         android:layout_height="47dp"
         android:layout_marginTop="8dp"
@@ -20,6 +46,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/exercise_recycler"
         android:layout_width="0dp"
         android:layout_height="191dp"
         android:layout_marginStart="4dp"
@@ -29,5 +56,58 @@
         android:layout_marginRight="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/exercise_et" />
+
+    <TextView
+        android:id="@+id/weight_tv"
+        android:layout_width="83dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="32dp"
+        android:gravity="bottom|center_horizontal"
+        android:text="Weight"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@id/weight_et"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_recycler" />
+
+    <TextView
+        android:id="@+id/sets_tv"
+        android:layout_width="83dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="28dp"
+        android:gravity="bottom|center_horizontal"
+        android:text="Sets"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/sets_et"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weight_tv" />
+
+    <EditText
+        android:id="@+id/weight_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/weight_tv"
+        app:layout_constraintTop_toTopOf="@+id/weight_tv" />
+
+    <EditText
+        android:id="@+id/sets_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sets_tv"
+        app:layout_constraintTop_toTopOf="@+id/sets_tv" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
