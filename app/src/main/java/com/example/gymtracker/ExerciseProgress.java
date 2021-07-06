@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class ExerciseProgress extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.activity_exercise_progress);
 
         exerciseNames = new ArrayList<String>(getSharedPreferences(SHARED_PREFS, MODE_PRIVATE).getStringSet(ExerciseLogger.EXERCISES, new HashSet<>()));
+        Collections.sort(exerciseNames);
         spinner = findViewById(R.id.exerciseProgressSpinner);
         arrayAdapter = new ArrayAdapter<String>(ExerciseProgress.this, android.R.layout.simple_spinner_item, exerciseNames);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -44,7 +46,7 @@ public class ExerciseProgress extends AppCompatActivity implements AdapterView.O
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
-        
+
     }
 
     @Override

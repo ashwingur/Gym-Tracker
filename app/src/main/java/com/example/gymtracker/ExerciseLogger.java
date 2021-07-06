@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +55,7 @@ public class ExerciseLogger extends AppCompatActivity {
 
         exerciseDataBaseHelper = new ExerciseDataBaseHelper(ExerciseLogger.this);
         exerciseList = new ArrayList<String>(exerciseSet);
+        Collections.sort(exerciseList);
 
         Log.d("Exercise", exerciseList.toString());
 
@@ -98,7 +100,8 @@ public class ExerciseLogger extends AppCompatActivity {
             if (isNew){
                 // Also add to exercise list so Recycler updates
                 exerciseList.add(exerciseEt.getText().toString());
-                mAdapter.notifyItemInserted(exerciseList.size() - 1);
+                Collections.sort(exerciseList);
+                mAdapter.notifyDataSetChanged();
             }
 
             Log.d("Exercise", "exerciseSet: " + exerciseSet.toString());
