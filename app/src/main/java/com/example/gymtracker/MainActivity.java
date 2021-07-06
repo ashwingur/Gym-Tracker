@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button logExerciseBtn;
+    Button logExerciseBtn, viewExerciseBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +17,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         logExerciseBtn = findViewById(R.id.logExerciseBtn);
+        viewExerciseBtn = findViewById(R.id.viewExerciseBtn);
 
         logExerciseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 logExercise();
+            }
+        });
+
+        viewExerciseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewExercise();
             }
         });
     }
@@ -30,4 +38,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, ExerciseLogger.class);
         MainActivity.this.startActivity(intent);
     }
+
+    public void viewExercise(){
+        Intent intent = new Intent(MainActivity.this, ExerciseProgress.class);
+        MainActivity.this.startActivity(intent);
+    }
+
+
 }
