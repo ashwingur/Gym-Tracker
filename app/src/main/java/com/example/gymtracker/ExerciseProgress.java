@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +41,13 @@ public class ExerciseProgress extends AppCompatActivity implements AdapterView.O
         arrayAdapter = new ArrayAdapter<String>(ExerciseProgress.this, android.R.layout.simple_spinner_item, exerciseNames);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
+
+//        ExerciseDataBaseHelper dataBaseHelper = new ExerciseDataBaseHelper(ExerciseProgress.this);
+//        List<Exercise> everything = dataBaseHelper.getAllExercises();
+//
+//        for (Exercise e : everything){
+//            Log.d("Everything", e.toString());
+//        }
 
     }
 

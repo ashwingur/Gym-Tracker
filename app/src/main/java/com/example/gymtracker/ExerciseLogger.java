@@ -115,7 +115,4 @@ public class ExerciseLogger extends AppCompatActivity {
         }
     }
 
-    public void updateRecyclerView(){
-
-    }
 }
