@@ -9,15 +9,19 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ExerciseLogger extends AppCompatActivity {
     public Set<String> exerciseSet;
+    public List<String> exerciseList;
     public static final String SHARED_PREFS = "SHARED_PREFS";
     public static final String EXERCISES = "EXERCISES";
 
@@ -25,6 +29,7 @@ public class ExerciseLogger extends AppCompatActivity {
     public EditText exerciseEt, weightEt, setsEt, repsEt;
     public RecyclerView recyclerView;
     public ExerciseDataBaseHelper exerciseDataBaseHelper;
+    public ArrayAdapter arrayAdapter;
 
     public SharedPreferences sharedPreferences;
 
@@ -46,6 +51,7 @@ public class ExerciseLogger extends AppCompatActivity {
         repsEt = findViewById(R.id.reps_et);
 
         exerciseDataBaseHelper = new ExerciseDataBaseHelper(ExerciseLogger.this);
+        exerciseList = new ArrayList<String>(exerciseSet);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +83,9 @@ public class ExerciseLogger extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Error: Failed to add exercise", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void updateRecyclerView(){
 
     }
 }
