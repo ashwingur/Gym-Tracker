@@ -36,6 +36,8 @@ public class ExerciseLogger extends AppCompatActivity {
 
     public SharedPreferences sharedPreferences;
 
+    Toast mToast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +65,6 @@ public class ExerciseLogger extends AppCompatActivity {
         mAdapter = new ExerciseNameAdapter(exerciseList, this, exerciseEt);
         recyclerView.setAdapter(mAdapter);
 
-
-
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +85,10 @@ public class ExerciseLogger extends AppCompatActivity {
         Exercise exercise = new Exercise(-1,exerciseEt.getText().toString(), Integer.parseInt(weightEt.getText().toString()),
                 Integer.parseInt(repsEt.getText().toString()), Integer.parseInt(setsEt.getText().toString()), System.currentTimeMillis());
         boolean result = exerciseDataBaseHelper.addOne(exercise);
+
+        if (mToast != null){
+            mToast.cancel();
+        }
         if (result){
             boolean isNew = exerciseSet.add(exerciseEt.getText().toString());
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -98,10 +102,13 @@ public class ExerciseLogger extends AppCompatActivity {
             }
 
             Log.d("Exercise", "exerciseSet: " + exerciseSet.toString());
-            Toast.makeText(this, String.format("Added exercise: %s", exercise.getName()), Toast.LENGTH_SHORT).show();
-            //Toast.makeText(this, String.format("Added exercise: %s", exerciseEt.getText().toString()), Toast.LENGTH_SHORT).show();
+            mToast = Toast.makeText(this, String.format("Added exercise: %s", exercise.getName()), Toast.LENGTH_SHORT);
+            mToast.show();
+            mToast = null;
         } else {
-            Toast.makeText(this, "Error: Failed to add exercise", Toast.LENGTH_SHORT).show();
+            mToast =  Toast.makeText(this, "Error: Failed to add exercise", Toast.LENGTH_SHORT);
+            mToast.show();
+            mToast = null;
         }
     }
 
