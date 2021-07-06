@@ -62,14 +62,18 @@ public class ExerciseLogger extends AppCompatActivity {
             Toast.makeText(this, "Missing Data", Toast.LENGTH_SHORT).show();
             return;
         }
+        Log.d("Exercise", "Here");
         Exercise exercise = new Exercise(-1,exerciseEt.getText().toString(), Integer.parseInt(weightEt.getText().toString()),
-                Integer.parseInt(repsEt.getText().toString()), Integer.parseInt(setsEt.getText().toString()), System.currentTimeMillis() / 1000L);
+                Integer.parseInt(repsEt.getText().toString()), Integer.parseInt(setsEt.getText().toString()), System.currentTimeMillis());
+        Log.d("Exercise", "Here1");
         boolean result = exerciseDataBaseHelper.addOne(exercise);
+        Log.d("Exercise", String.format("Result: %b, %s", result, exercise.toString()));
         if (result){
             exerciseSet.add(exerciseEt.getText().toString());
             sharedPreferences.edit().putStringSet(EXERCISES,exerciseSet);
             Toast.makeText(this, String.format("Added exercise: %s", exercise.toString()), Toast.LENGTH_SHORT).show();
             Toast.makeText(this, String.format("Added exercise: %s", exerciseEt.getText().toString()), Toast.LENGTH_SHORT).show();
+            Log.d("Exercise", "Made toast because result is true");
         } else {
             Toast.makeText(this, "Error: Failed to add exercise", Toast.LENGTH_SHORT).show();
         }

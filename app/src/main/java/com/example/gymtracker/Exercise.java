@@ -19,6 +19,7 @@ public class Exercise {
         this.reps = reps;
         this.sets = sets;
         this.unixTime = unixTime;
+        this.date = new Date(unixTime);
     }
 
     @Override
