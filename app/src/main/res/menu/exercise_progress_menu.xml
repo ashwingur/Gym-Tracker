@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/date_latest_menu"
+        android:title="Sort by latest date" />
+    <item
+        android:id="@+id/date_earliest_menu"
+        android:title="Sort by earlierst date" />
+    <item
+        android:id="@+id/weight_descend_menu"
+        android:title="Sort by weight descending" />
+    <item
+        android:id="@+id/weight_ascend_menu"
+        android:title="Sort by weight ascending" />
+    <item
+        android:id="@+id/reps_descending_menu"
+        android:title="Sort by reps descending" />
+    <item
+        android:id="@+id/reps_ascending_menu"
+        android:title="Sort by reps ascending" />
+</menu>
