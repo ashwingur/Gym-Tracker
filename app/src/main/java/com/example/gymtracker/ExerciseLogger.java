@@ -50,6 +50,7 @@ public class ExerciseLogger extends AppCompatActivity {
                 addExercise();
             }
         });
+
     }
 
     public void addExercise(){
@@ -60,6 +61,7 @@ public class ExerciseLogger extends AppCompatActivity {
             return;
         }
         exerciseSet.add(exerciseEt.getText().toString());
+        sharedPreferences.edit().putStringSet(EXERCISES,exerciseSet);
         Toast.makeText(this, String.format("Added exercise: %s", exerciseEt.getText().toString()), Toast.LENGTH_SHORT).show();
     }
 }
