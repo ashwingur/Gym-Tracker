@@ -3,6 +3,7 @@ package com.example.gymtracker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ public class ExerciseLogger extends AppCompatActivity {
     public Button addBtn;
     public EditText exerciseEt, weightEt, setsEt, repsEt;
     public RecyclerView recyclerView;
+    public ExerciseDataBaseHelper exerciseDataBaseHelper;
 
     public SharedPreferences sharedPreferences;
 
@@ -42,7 +44,8 @@ public class ExerciseLogger extends AppCompatActivity {
         weightEt = findViewById(R.id.weight_et);
         setsEt = findViewById(R.id.sets_et);
         repsEt = findViewById(R.id.reps_et);
-        Log.d("ButtonTest", "This msg is run");
+
+        exerciseDataBaseHelper = new ExerciseDataBaseHelper(ExerciseLogger.this);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,14 +57,22 @@ public class ExerciseLogger extends AppCompatActivity {
     }
 
     public void addExercise(){
-        Log.d("ButtonTest", "This button is run");
         if (TextUtils.isEmpty(exerciseEt.getText()) || TextUtils.isEmpty(weightEt.getText()) ||
             TextUtils.isEmpty(setsEt.getText()) || TextUtils.isEmpty(repsEt.getText())){
             Toast.makeText(this, "Missing Data", Toast.LENGTH_SHORT).show();
             return;
         }
-        exerciseSet.add(exerciseEt.getText().toString());
-        sharedPreferences.edit().putStringSet(EXERCISES,exerciseSet);
-        Toast.makeText(this, String.format("Added exercise: %s", exerciseEt.getText().toString()), Toast.LENGTH_SHORT).show();
+        Exercise exercise = new Exercise(-1,exerciseEt.getText().toString(), Integer.parseInt(weightEt.getText().toString()),
+                Integer.parseInt(repsEt.getText().toString()), Integer.parseInt(setsEt.getText().toString()), System.currentTimeMillis() / 1000L);
+        boolean result = exerciseDataBaseHelper.addOne(exercise);
+        if (result){
+            exerciseSet.add(exerciseEt.getText().toString());
+            sharedPreferences.edit().putStringSet(EXERCISES,exerciseSet);
+            Toast.makeText(this, String.format("Added exercise: %s", exercise.toString()), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, String.format("Added exercise: %s", exerciseEt.getText().toString()), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error: Failed to add exercise", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

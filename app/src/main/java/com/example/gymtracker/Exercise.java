@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Exercise {
 
+    public int id;
     public String name;
     public int weight;
     public int reps;
@@ -11,7 +12,8 @@ public class Exercise {
     public long unixTime;
     public Date date;
 
-    public Exercise(String name, int weight, int reps, int sets, long unixTime) {
+    public Exercise(int id, String name, int weight, int reps, int sets, long unixTime) {
+        this.id = id;
         this.name = name;
         this.weight = weight;
         this.reps = reps;
@@ -27,7 +29,16 @@ public class Exercise {
                 ", reps=" + reps +
                 ", sets=" + sets +
                 ", date=" + date.toString() +
+                ", id=" + id +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {
