@@ -81,17 +81,24 @@ public class ExerciseLogger extends AppCompatActivity {
             Toast.makeText(this, "Missing Data", Toast.LENGTH_SHORT).show();
             return;
         }
+
         Exercise exercise = new Exercise(-1,exerciseEt.getText().toString(), Integer.parseInt(weightEt.getText().toString()),
                 Integer.parseInt(repsEt.getText().toString()), Integer.parseInt(setsEt.getText().toString()), System.currentTimeMillis());
         boolean result = exerciseDataBaseHelper.addOne(exercise);
         if (result){
-            exerciseSet.add(exerciseEt.getText().toString());
+            boolean isNew = exerciseSet.add(exerciseEt.getText().toString());
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putStringSet(EXERCISES, new HashSet<String>(exerciseSet));
             editor.apply();
 
+            if (isNew){
+                // Also add to exercise list so Recycler updates
+                exerciseList.add(exerciseEt.getText().toString());
+                mAdapter.notifyItemInserted(exerciseList.size() - 1);
+            }
+
             Log.d("Exercise", "exerciseSet: " + exerciseSet.toString());
-            Toast.makeText(this, String.format("Added exercise: %s", exercise.toString()), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, String.format("Added exercise: %s", exercise.getName()), Toast.LENGTH_SHORT).show();
             //Toast.makeText(this, String.format("Added exercise: %s", exerciseEt.getText().toString()), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Error: Failed to add exercise", Toast.LENGTH_SHORT).show();
