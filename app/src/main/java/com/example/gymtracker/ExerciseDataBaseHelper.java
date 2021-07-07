@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -55,6 +56,16 @@ public class ExerciseDataBaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return result == -1 ? false : true;
+    }
+
+    public boolean deleteOne(Exercise exercise){
+        Log.d("Exercise", "Deleting exercise " + exercise);
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + EXERCISE_TABLE + " WHERE " + EXERCISE_ID + " = " + exercise.getId();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        Log.d("Exercise", "Deleting exercise " + exercise + " result: " + cursor.moveToFirst());
+        return cursor.moveToFirst();
     }
 
     public List<Exercise> getAllExercises(){

@@ -31,8 +31,8 @@ public class ExerciseProgress extends AppCompatActivity{
     public ExerciseProgressAdapter mAdapter;
     public RecyclerView.LayoutManager layoutManager;
 
-    private List<String> exerciseNames;
-    private List<Exercise> exercises;
+    public List<String> exerciseNames;
+    public List<Exercise> exercises;
 
     ExerciseDataBaseHelper dataBaseHelper;
 
@@ -75,7 +75,7 @@ public class ExerciseProgress extends AppCompatActivity{
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new ExerciseProgressAdapter(exercises, this);
+        mAdapter = new ExerciseProgressAdapter(exercises, this, this);
         recyclerView.setAdapter(mAdapter);
 
     }

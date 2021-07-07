@@ -1,6 +1,10 @@
 package com.example.gymtracker;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +21,14 @@ public class ExerciseProgressAdapter extends RecyclerView.Adapter<ExerciseProgre
 
     List<Exercise> exercises;
     Context context;
+    AlertDialog.Builder builder;
+    ExerciseProgress exerciseProgress;
 
-    public ExerciseProgressAdapter(List<Exercise> exercises, Context context) {
+    public ExerciseProgressAdapter(List<Exercise> exercises, Context context, ExerciseProgress exerciseProgress) {
         this.exercises = exercises;
         this.context = context;
+        this.builder = new AlertDialog.Builder(context);
+        this.exerciseProgress = exerciseProgress;
     }
 
     public void setExercises(List<Exercise> exercises){
@@ -42,11 +50,31 @@ public class ExerciseProgressAdapter extends RecyclerView.Adapter<ExerciseProgre
         holder.setsTv.setText(Integer.toString(exercises.get(position).sets));
         holder.repsTv.setText(Integer.toString(exercises.get(position).reps));
 
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+        holder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                // Update the edit text
-                //ExerciseProgressAdapter.this.exerciseNameEt.setText(exerciseNames.get(position));
+            public boolean onLongClick(View v) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                ExerciseDataBaseHelper dataBaseHelper = new ExerciseDataBaseHelper(ExerciseProgressAdapter.this.context);
+                                int actualPosition = holder.getAdapterPosition();
+                                dataBaseHelper.deleteOne(exercises.get(actualPosition));
+                                Exercise e = exercises.remove(actualPosition);
+                                exerciseProgress.exercises.remove(e);
+                                ExerciseProgressAdapter.this.notifyItemRemoved(actualPosition);
+
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+                        }
+                    }
+                };
+                builder.setMessage("Delete this entry?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+                return false;
             }
         });
     }
