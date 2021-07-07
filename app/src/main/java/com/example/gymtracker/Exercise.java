@@ -40,7 +40,7 @@ public class Exercise {
     public static Comparator<Exercise> ExerciseWeightDescendingComparator = new Comparator<Exercise>() {
         @Override
         public int compare(Exercise e1, Exercise e2) {
-            int result = (int) (e1.weight - e2.weight);
+            int result = (int) (e2.weight - e1.weight);
             if (result == 0){
                 // If they are the same, then sort by date
                 return ExerciseDateLatestComparator.compare(e1, e2);
@@ -52,7 +52,7 @@ public class Exercise {
     public static Comparator<Exercise> ExerciseWeightAscendingComparator = new Comparator<Exercise>() {
         @Override
         public int compare(Exercise e1, Exercise e2) {
-            int result = (int) (e2.weight - e1.weight);
+            int result = (int) (e1.weight - e2.weight);
             if (result == 0){
                 // If they are the same, then sort by date
                 return ExerciseDateLatestComparator.compare(e1, e2);

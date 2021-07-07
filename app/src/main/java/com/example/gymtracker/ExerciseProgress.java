@@ -95,24 +95,30 @@ public class ExerciseProgress extends AppCompatActivity{
         switch (item.getItemId()){
             case R.id.date_latest_menu:
                 Toast.makeText(ExerciseProgress.this, "Sort date latest", Toast.LENGTH_SHORT).show();
-                return true;
+                Collections.sort(exercises, Exercise.ExerciseDateLatestComparator);
+                break;
             case R.id.date_earliest_menu:
+                Collections.sort(exercises, Exercise.ExerciseDateEarliestComparator);
                 Toast.makeText(ExerciseProgress.this, "Sort date earliest", Toast.LENGTH_SHORT).show();
-                return true;
+                break;
             case R.id.reps_ascending_menu:
+                Collections.sort(exercises, Exercise.ExerciseRepsAscendingComparator);
                 Toast.makeText(ExerciseProgress.this, "Sort reps ascending", Toast.LENGTH_SHORT).show();
-                return true;
+                break;
             case R.id.reps_descending_menu:
+                Collections.sort(exercises, Exercise.ExerciseRepsDescendingComparator);
                 Toast.makeText(ExerciseProgress.this, "Sort reps descendig", Toast.LENGTH_SHORT).show();
-                return true;
+                break;
             case R.id.weight_ascend_menu:
                 Toast.makeText(ExerciseProgress.this, "Sort weight ascending", Toast.LENGTH_SHORT).show();
-                return true;
+                Collections.sort(exercises, Exercise.ExerciseWeightAscendingComparator);
+                break;
             case R.id.weight_descend_menu:
+                Collections.sort(exercises, Exercise.ExerciseWeightDescendingComparator);
                 Toast.makeText(ExerciseProgress.this, "Sort weight descending", Toast.LENGTH_SHORT).show();
-                return true;
+                break;
         }
-
+        mAdapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }
 }
