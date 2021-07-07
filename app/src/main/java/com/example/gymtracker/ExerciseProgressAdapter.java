@@ -15,7 +15,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ExerciseProgressAdapter extends RecyclerView.Adapter<ExerciseProgressAdapter.MyViewHolderProgress> {
 
@@ -23,12 +25,14 @@ public class ExerciseProgressAdapter extends RecyclerView.Adapter<ExerciseProgre
     Context context;
     AlertDialog.Builder builder;
     ExerciseProgress exerciseProgress;
+    SharedPreferences sharedPreferences;
 
     public ExerciseProgressAdapter(List<Exercise> exercises, Context context, ExerciseProgress exerciseProgress) {
         this.exercises = exercises;
         this.context = context;
         this.builder = new AlertDialog.Builder(context);
         this.exerciseProgress = exerciseProgress;
+        sharedPreferences = exerciseProgress.getSharedPreferences(ExerciseLogger.SHARED_PREFS, Context.MODE_PRIVATE);
     }
 
     public void setExercises(List<Exercise> exercises){
@@ -63,6 +67,12 @@ public class ExerciseProgressAdapter extends RecyclerView.Adapter<ExerciseProgre
                                 dataBaseHelper.deleteOne(exercises.get(actualPosition));
                                 Exercise e = exercises.remove(actualPosition);
                                 exerciseProgress.exercises.remove(e);
+                                if (exercises.size() == 0){
+                                    Set<String> set = sharedPreferences.getStringSet(ExerciseLogger.EXERCISES, new HashSet<>());
+                                    set.remove(e.name);
+                                    sharedPreferences.edit().putStringSet(ExerciseLogger.EXERCISES, new HashSet<>(set)).apply();
+                                }
+
                                 ExerciseProgressAdapter.this.notifyItemRemoved(actualPosition);
 
                                 break;
