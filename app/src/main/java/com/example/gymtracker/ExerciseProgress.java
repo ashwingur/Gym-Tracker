@@ -52,7 +52,7 @@ public class ExerciseProgress extends AppCompatActivity{
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                
+
                 exercises = dataBaseHelper.getExerciseByName(exerciseNames.get(position));
                 mAdapter.setExercises(exercises);
                 mAdapter.notifyDataSetChanged();
@@ -64,11 +64,11 @@ public class ExerciseProgress extends AppCompatActivity{
         });
 
         dataBaseHelper = new ExerciseDataBaseHelper(ExerciseProgress.this);
-        exercises = dataBaseHelper.getExerciseByName(exerciseNames.get(0));
-//
-//        for (Exercise e : everything){
-//            Log.d("Everything", e.toString());
-//        }
+        if (exerciseNames.size() > 0){
+            exercises = dataBaseHelper.getExerciseByName(exerciseNames.get(0));
+        } else {
+            exercises = new ArrayList<Exercise>();
+        }
 
         // Setting the recycler
         recyclerView = findViewById(R.id.exerciseProgressRecycler);
@@ -79,19 +79,6 @@ public class ExerciseProgress extends AppCompatActivity{
         recyclerView.setAdapter(mAdapter);
 
     }
-
-//    @Override
-//    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-//        // Based on spinner selection, change exercise
-//        dataBaseHelper.getExerciseByName(exerciseNames.get(position));
-//        mAdapter.notifyDataSetChanged();
-//
-//    }
-//
-//    @Override
-//    public void onNothingSelected(AdapterView<?> parent) {
-//        // TODO Auto-generated method stub
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
