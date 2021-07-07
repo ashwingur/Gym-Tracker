@@ -68,9 +68,14 @@ public class ExerciseProgressAdapter extends RecyclerView.Adapter<ExerciseProgre
                                 Exercise e = exercises.remove(actualPosition);
                                 exerciseProgress.exercises.remove(e);
                                 if (exercises.size() == 0){
-                                    Set<String> set = sharedPreferences.getStringSet(ExerciseLogger.EXERCISES, new HashSet<>());
+                                    Set<String> set = new HashSet<>(sharedPreferences.getStringSet(ExerciseLogger.EXERCISES, new HashSet<>()));
+                                    Log.d("Exercise", "Before " + set);
                                     set.remove(e.name);
                                     sharedPreferences.edit().putStringSet(ExerciseLogger.EXERCISES, new HashSet<>(set)).apply();
+                                    Log.d("Exercise", "After " + set);
+                                    Log.d("Exercise", "After After " + sharedPreferences.getStringSet(ExerciseLogger.EXERCISES, new HashSet<>()));
+                                    exerciseProgress.exerciseNames.remove(e.name);
+                                    exerciseProgress.arrayAdapter.remove(e.name);
                                 }
 
                                 ExerciseProgressAdapter.this.notifyItemRemoved(actualPosition);

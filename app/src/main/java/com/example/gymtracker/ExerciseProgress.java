@@ -25,7 +25,7 @@ public class ExerciseProgress extends AppCompatActivity{
 
     private Menu menu;
     private Spinner spinner;
-    private ArrayAdapter<String> arrayAdapter;
+    public ArrayAdapter<String> arrayAdapter;
 
     private RecyclerView recyclerView;
     public ExerciseProgressAdapter mAdapter;

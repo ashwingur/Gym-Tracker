@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d("Exercise", "ON LAUNCH:" + getSharedPreferences(ExerciseLogger.SHARED_PREFS, MODE_PRIVATE).getStringSet(ExerciseLogger.EXERCISES, new HashSet<String>()));
 
         logExerciseBtn = findViewById(R.id.logExerciseBtn);
         viewExerciseBtn = findViewById(R.id.viewExerciseBtn);
