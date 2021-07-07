@@ -2,6 +2,7 @@ package com.example.gymtracker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -25,8 +26,13 @@ public class ExerciseProgress extends AppCompatActivity implements AdapterView.O
     private Menu menu;
     private Spinner spinner;
     private ArrayAdapter<String> arrayAdapter;
+
     private RecyclerView recyclerView;
+    public RecyclerView.Adapter mAdapter;
+    public RecyclerView.LayoutManager layoutManager;
+
     private List<String> exerciseNames;
+    private List<Exercise> exercises;
 
     public static final String SHARED_PREFS = "SHARED_PREFS";
 
@@ -42,12 +48,20 @@ public class ExerciseProgress extends AppCompatActivity implements AdapterView.O
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
 
-//        ExerciseDataBaseHelper dataBaseHelper = new ExerciseDataBaseHelper(ExerciseProgress.this);
-//        List<Exercise> everything = dataBaseHelper.getAllExercises();
+        ExerciseDataBaseHelper dataBaseHelper = new ExerciseDataBaseHelper(ExerciseProgress.this);
+        exercises = dataBaseHelper.getExerciseByName(exerciseNames.get(0));
 //
 //        for (Exercise e : everything){
 //            Log.d("Everything", e.toString());
 //        }
+
+        // Setting the recycler
+        recyclerView = findViewById(R.id.exerciseProgressRecycler);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new ExerciseProgressAdapter(exercises, this);
+        recyclerView.setAdapter(mAdapter);
 
     }
 

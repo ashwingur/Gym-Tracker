@@ -84,4 +84,33 @@ public class ExerciseDataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+    public List<Exercise> getExerciseByName(String exerciseName){
+        List<Exercise> returnList = new ArrayList<>();
+
+        String queryString = "SELECT * FROM " + EXERCISE_TABLE + " WHERE " + EXERCISE_NAME + " LIKE '" + exerciseName + "'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()){
+            // Loop through all results and create new customer object for each
+            do {
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                long unixTime = cursor.getLong(2);
+                int weight = cursor.getInt(3);
+                int reps = cursor.getInt(4);
+                int sets = cursor.getInt(5);
+                returnList.add(new Exercise(id, name, weight, reps, sets, unixTime));
+            } while (cursor.moveToNext());
+
+        } else {
+            // Nothing found
+        }
+        cursor.close();
+        db.close();
+        return returnList;
+    }
 }
