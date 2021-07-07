@@ -21,18 +21,20 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-public class ExerciseProgress extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class ExerciseProgress extends AppCompatActivity{
 
     private Menu menu;
     private Spinner spinner;
     private ArrayAdapter<String> arrayAdapter;
 
     private RecyclerView recyclerView;
-    public RecyclerView.Adapter mAdapter;
+    public ExerciseProgressAdapter mAdapter;
     public RecyclerView.LayoutManager layoutManager;
 
     private List<String> exerciseNames;
     private List<Exercise> exercises;
+
+    ExerciseDataBaseHelper dataBaseHelper;
 
     public static final String SHARED_PREFS = "SHARED_PREFS";
 
@@ -47,8 +49,21 @@ public class ExerciseProgress extends AppCompatActivity implements AdapterView.O
         arrayAdapter = new ArrayAdapter<String>(ExerciseProgress.this, android.R.layout.simple_spinner_item, exerciseNames);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                
+                exercises = dataBaseHelper.getExerciseByName(exerciseNames.get(position));
+                mAdapter.setExercises(exercises);
+                mAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-        ExerciseDataBaseHelper dataBaseHelper = new ExerciseDataBaseHelper(ExerciseProgress.this);
+            }
+        });
+
+        dataBaseHelper = new ExerciseDataBaseHelper(ExerciseProgress.this);
         exercises = dataBaseHelper.getExerciseByName(exerciseNames.get(0));
 //
 //        for (Exercise e : everything){
@@ -65,16 +80,18 @@ public class ExerciseProgress extends AppCompatActivity implements AdapterView.O
 
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // TODO Auto-generated method stub
-    }
+//    @Override
+//    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+//        // Based on spinner selection, change exercise
+//        dataBaseHelper.getExerciseByName(exerciseNames.get(position));
+//        mAdapter.notifyDataSetChanged();
+//
+//    }
+//
+//    @Override
+//    public void onNothingSelected(AdapterView<?> parent) {
+//        // TODO Auto-generated method stub
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

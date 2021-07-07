@@ -23,6 +23,10 @@ public class ExerciseProgressAdapter extends RecyclerView.Adapter<ExerciseProgre
         this.context = context;
     }
 
+    public void setExercises(List<Exercise> exercises){
+        this.exercises = exercises;
+    }
+
     @NonNull
     @Override
     public MyViewHolderProgress onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
