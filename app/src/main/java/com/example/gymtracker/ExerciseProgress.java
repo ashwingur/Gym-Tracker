@@ -24,7 +24,7 @@ import java.util.List;
 public class ExerciseProgress extends AppCompatActivity{
 
     private Menu menu;
-    private Spinner spinner;
+    public Spinner spinner;
     public ArrayAdapter<String> arrayAdapter;
 
     private RecyclerView recyclerView;
@@ -34,7 +34,7 @@ public class ExerciseProgress extends AppCompatActivity{
     public List<String> exerciseNames;
     public List<Exercise> exercises;
 
-    ExerciseDataBaseHelper dataBaseHelper;
+    public ExerciseDataBaseHelper dataBaseHelper;
 
     public static final String SHARED_PREFS = "SHARED_PREFS";
 

@@ -69,13 +69,22 @@ public class ExerciseProgressAdapter extends RecyclerView.Adapter<ExerciseProgre
                                 exerciseProgress.exercises.remove(e);
                                 if (exercises.size() == 0){
                                     Set<String> set = new HashSet<>(sharedPreferences.getStringSet(ExerciseLogger.EXERCISES, new HashSet<>()));
-                                    Log.d("Exercise", "Before " + set);
                                     set.remove(e.name);
                                     sharedPreferences.edit().putStringSet(ExerciseLogger.EXERCISES, new HashSet<>(set)).apply();
-                                    Log.d("Exercise", "After " + set);
-                                    Log.d("Exercise", "After After " + sharedPreferences.getStringSet(ExerciseLogger.EXERCISES, new HashSet<>()));
                                     exerciseProgress.exerciseNames.remove(e.name);
                                     exerciseProgress.arrayAdapter.remove(e.name);
+                                    int pos = exerciseProgress.spinner.getSelectedItemPosition();
+                                    if (pos + 1 == exerciseProgress.exerciseNames.size() && pos > 0){
+                                        // If it was the last element in a list with more than 1 element
+                                        exerciseProgress.exercises = dataBaseHelper.getExerciseByName(exerciseProgress.exerciseNames.get(pos - 1));
+                                        exerciseProgress.mAdapter.setExercises(exerciseProgress.exercises);
+                                        exerciseProgress.mAdapter.notifyDataSetChanged();
+                                    } else if (pos + 1 < exerciseProgress.exerciseNames.size() && exerciseProgress.exerciseNames.size() > 1){
+                                        // It is not a last element in a list with more than 1 element
+                                        exerciseProgress.exercises = dataBaseHelper.getExerciseByName(exerciseProgress.exerciseNames.get(pos));
+                                        exerciseProgress.mAdapter.setExercises(exerciseProgress.exercises);
+                                        exerciseProgress.mAdapter.notifyDataSetChanged();
+                                    }
                                 }
 
                                 ExerciseProgressAdapter.this.notifyItemRemoved(actualPosition);
